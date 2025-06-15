@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeFi Compound Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f0f4f8; }
+    .calculator { background: #fff; padding: 2rem; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input, select, button { width: 100%; padding: 0.5rem; margin-top: 0.5rem; font-size: 1rem; }
+    .result { margin-top: 1.5rem; font-size: 1.2rem; text-align: center; color: green; }
+    .adjusted-result { margin-top: 0.5rem; font-size: 1rem; text-align: center; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>💰 DeFi Compound Calculator</h2>
+    <label for="investment">Investment Amount ($)</label>
+    <input type="number" id="investment" value="1000">
+
+    <label for="return">Estimated Return per Period (%)</label>
+    <input type="number" id="return" value="1">
+
+    <label for="periods">Number of Periods</label>
+    <input type="number" id="periods" value="30">
+
+    <label for="compound">Compounding</label>
+    <select id="compound">
+      <option value="yes" selected>Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <button onclick="calculate()">Calculate</button>
+    <div class="result" id="result"></div>
+    <div class="adjusted-result" id="adjustedResult"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const investment = parseFloat(document.getElementById('investment').value);
+      const rate = parseFloat(document.getElementById('return').value) / 100;
+      const periods = parseInt(document.getElementById('periods').value);
+      const compound = document.getElementById('compound').value === 'yes';
+
+      let finalAmount;
+      if (compound) {
+        finalAmount = investment * Math.pow((1 + rate), periods);
+      } else {
+        finalAmount = investment * (1 + (rate * periods));
+      }
+
+      const adjustedAmount = finalAmount * 0.77;
+
+      document.getElementById('result').innerText = `Final Amount: $${finalAmount.toFixed(2)}`;
+      document.getElementById('adjustedResult').innerText = `Adjusted (77%) Amount: $${adjustedAmount.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
