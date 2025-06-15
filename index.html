@@ -56,16 +56,20 @@
         finalAmount = investment * (1 + (rate * periods));
       }
 
-      // Correct: Adjusted value is just percentage of final amount
+      // Adjusted value = percentage of the final amount
       const adjustedValue = finalAmount * percentage;
 
-      // New Investment Amount = Adjusted Value + (Adjusted Value - Final Amount)
-      const adjustedDiff = adjustedValue - finalAmount;
-      const newInvestmentAmount = adjustedValue + adjustedDiff;
+      // New Investment 120 Amount using same logic as above but with 120 periods
+      let newInvestment120;
+      if (compound) {
+        newInvestment120 = investment * Math.pow((1 + rate), 120);
+      } else {
+        newInvestment120 = investment * (1 + (rate * 120));
+      }
 
       document.getElementById('result').innerText = `Final Amount: $${finalAmount.toFixed(2)}`;
       document.getElementById('adjustedResult').innerText = `Adjusted (${(percentage * 100).toFixed(2)}%) Value: $${adjustedValue.toFixed(2)}`;
-      document.getElementById('newInvestment').innerText = `New Investment Amount: $${newInvestmentAmount.toFixed(2)}`;
+      document.getElementById('newInvestment').innerText = `New Investment 120 Amount: $${newInvestment120.toFixed(2)}`;
     }
   </script>
 </body>
