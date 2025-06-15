@@ -55,14 +55,14 @@
         finalAmount = investment * (1 + (rate * periods));
       }
 
-      const basePercent = investment * percentage;
-      const gain = investment - basePercent;
-      const multipliedBase = basePercent * periods;
-      const finalAdjustedSum = multipliedBase + gain;
-      const finalAdjustedValue = finalAdjustedSum * percentage;
+      // Calculate the gain (total interest earned)
+      const gain = finalAmount - investment;
+
+      // Adjusted amount is: 77% of the final amount plus the full gain
+      const adjustedValue = (finalAmount * percentage) + gain;
 
       document.getElementById('result').innerText = `Final Amount: $${finalAmount.toFixed(2)}`;
-      document.getElementById('adjustedResult').innerText = `Adjusted (${(percentage * 100).toFixed(2)}%) Value: $${finalAdjustedValue.toFixed(2)}`;
+      document.getElementById('adjustedResult').innerText = `Adjusted (${(percentage * 100).toFixed(2)}%) Value: $${adjustedValue.toFixed(2)}`;
     }
   </script>
 </body>
