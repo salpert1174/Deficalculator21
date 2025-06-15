@@ -26,6 +26,9 @@
     <label for="periods">Number of Periods</label>
     <input type="number" id="periods" value="30">
 
+    <label for="percentage">Adjustment Percentage (%)</label>
+    <input type="number" id="percentage" value="77">
+
     <label for="compound">Compounding</label>
     <select id="compound">
       <option value="yes" selected>Yes</option>
@@ -42,6 +45,7 @@
       const investment = parseFloat(document.getElementById('investment').value);
       const rate = parseFloat(document.getElementById('return').value) / 100;
       const periods = parseInt(document.getElementById('periods').value);
+      const percentage = parseFloat(document.getElementById('percentage').value) / 100;
       const compound = document.getElementById('compound').value === 'yes';
 
       let finalAmount;
@@ -51,10 +55,14 @@
         finalAmount = investment * (1 + (rate * periods));
       }
 
-      const adjustedAmount = finalAmount * 0.77;
+      const basePercent = investment * percentage;
+      const gain = investment - basePercent;
+      const multipliedBase = basePercent * periods;
+      const finalAdjustedSum = multipliedBase + gain;
+      const finalAdjustedValue = finalAdjustedSum * percentage;
 
       document.getElementById('result').innerText = `Final Amount: $${finalAmount.toFixed(2)}`;
-      document.getElementById('adjustedResult').innerText = `Adjusted (77%) Amount: $${adjustedAmount.toFixed(2)}`;
+      document.getElementById('adjustedResult').innerText = `Adjusted (${(percentage * 100).toFixed(2)}%) Value: $${finalAdjustedValue.toFixed(2)}`;
     }
   </script>
 </body>
