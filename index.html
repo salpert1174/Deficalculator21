@@ -11,7 +11,7 @@
     label { display: block; margin-top: 1rem; font-weight: bold; }
     input, select, button { width: 100%; padding: 0.5rem; margin-top: 0.5rem; font-size: 1rem; }
     .result { margin-top: 1.5rem; font-size: 1.2rem; text-align: center; color: green; }
-    .adjusted-result { margin-top: 0.5rem; font-size: 1rem; text-align: center; color: #555; }
+    .adjusted-result, .new-investment { margin-top: 0.5rem; font-size: 1rem; text-align: center; color: #555; }
   </style>
 </head>
 <body>
@@ -38,6 +38,7 @@
     <button onclick="calculate()">Calculate</button>
     <div class="result" id="result"></div>
     <div class="adjusted-result" id="adjustedResult"></div>
+    <div class="new-investment" id="newInvestment"></div>
   </div>
 
   <script>
@@ -55,14 +56,16 @@
         finalAmount = investment * (1 + (rate * periods));
       }
 
-      // Calculate the gain (total interest earned)
-      const gain = finalAmount - investment;
+      // Correct: Adjusted value is just percentage of final amount
+      const adjustedValue = finalAmount * percentage;
 
-      // Adjusted amount is: 77% of the final amount plus the full gain
-      const adjustedValue = (finalAmount * percentage) + gain;
+      // New Investment Amount = Adjusted Value + (Adjusted Value - Final Amount)
+      const adjustedDiff = adjustedValue - finalAmount;
+      const newInvestmentAmount = adjustedValue + adjustedDiff;
 
       document.getElementById('result').innerText = `Final Amount: $${finalAmount.toFixed(2)}`;
       document.getElementById('adjustedResult').innerText = `Adjusted (${(percentage * 100).toFixed(2)}%) Value: $${adjustedValue.toFixed(2)}`;
+      document.getElementById('newInvestment').innerText = `New Investment Amount: $${newInvestmentAmount.toFixed(2)}`;
     }
   </script>
 </body>
